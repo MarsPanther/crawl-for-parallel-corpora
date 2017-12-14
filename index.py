@@ -71,13 +71,14 @@ def get_book_data(lang):
         arry_to_lang = 3
     else:
         arry_to_lang = 0
+    print(books)
     url_languages = ['en', 'am', 'om', 'ti']
     ur_publications = ['publications', 'የሕትመት-ውጤቶች', 'wantoota-qophaʼan', 'እዋናዊ']
     url_books = ['bible', 'መጽሐፍ-ቅዱስ', 'kitaaba-qulqulluu', 'መጽሓፍ-ቅዱስ']
     url_nwt = ['nwt', 'nwt', 'bi12', 'nwt']
     url_holly_names = ['books', 'መጻሕፍት', 'kitaabota', 'መጻሕፍቲ']
     for i in books:
-        os.makedirs(language+"/"+ i)
+        os.makedirs(language+"/" + i)
         for number in range(1, 151):
             url = "http://www.jw.org" + "/" + url_languages[arry_to_lang] + "/" + ur_publications[arry_to_lang] + "/"\
                   + url_books[arry_to_lang] + "/" + url_nwt[arry_to_lang] + "/" + url_holly_names[arry_to_lang] + "/"\
@@ -93,16 +94,18 @@ def get_book_data(lang):
                 for div in soup.find_all("span", {'class': 'parabreak'}):
                     div.decompose()
                 lines = soup.findAll("span", {"class": "verse"})
-                file_book = open(language + "/" + i + "/"+ str(number) +".txt", "w+")
+                file_book = open(language + "/" + i + "/" + str(number) + ".txt", "w+")
                 for a in lines:
                     text = a.text
+                    text = text.replace('\n', ' ')
                     file_book.write(text.strip()+"\n")
             else:
                 break
         file_book.close()
 
 if __name__ == '__main__':
-    print(get_book_data('amharic'))
-    print(get_book_data('english'))
-    print(get_book_data('tigrigna'))
+    #print(get_book_data('english'))
+    #print(get_book_data('amharic'))
+    #print(get_book_data('english'))
+    #print(get_book_data('tigrigna'))
     print(get_book_data('oromifa'))
